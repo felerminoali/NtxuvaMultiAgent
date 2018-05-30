@@ -132,9 +132,9 @@ public class Game {
                             int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
 
                             if (u < 0) {
-                                message.append("o");
+                                message.append("You Win");
                             } else {
-                                message.append("x");
+                                message.append("Computer Win");
                             }
                             JOptionPane.showMessageDialog(null, message.toString());
                         }
