@@ -1,0 +1,2 @@
+how to compile
+jade.Boot -gui agentx:com.unilurio.teste.AgentX agento:com.unilurio.teste.AgentO
