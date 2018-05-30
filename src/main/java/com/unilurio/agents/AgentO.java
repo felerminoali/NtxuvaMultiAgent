@@ -3,14 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.unilurio.teste;
+package com.unilurio.agents;
 
+import com.unilurio.ntxuva.AlphaBetaPrunning;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import java.awt.Color;
+import javax.swing.JOptionPane;
+import com.unilurio.ntxuva.GameTreeSearch;
+import com.unilurio.ntxuva.Position;
 
 /**
  *
@@ -18,15 +22,22 @@ import java.awt.Color;
  */
 public class AgentO extends Agent {
 
-    private SigletonTestGui myGui = SigletonTestGui.getInstance();
+//    private SigletonNtxuvaGui myGui = SigletonNtxuvaGui.getInstance();
+    private SigletonNtxuvaBoard game = SigletonNtxuvaBoard.getInstance();
 
     protected void setup() {
-        myGui.showGui();
+        //myGui.showGui();
+        
+        System.out.println(game.ntxuva.toString());
 
         addBehaviour(new OneShotBehaviour(this) {
             @Override
             public void action() {
 
+               
+                System.out.println("entrou one shot O");
+                 game.ntxuva.turn = 'o';
+                System.out.println(game.ntxuva.toString());
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
                 msg.addReceiver(new AID("agentx", AID.ISLOCALNAME));
                 msg.setLanguage("English");
@@ -45,20 +56,32 @@ public class AgentO extends Agent {
 
                     if (content.equalsIgnoreCase("TurnO")) {
                         System.out.println("O playing ...");
-                        myGui.btn.setBackground(Color.RED);
+                       
+                        System.out.println(game.ntxuva.turn);
+                         Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
+                        System.out.println("o Move:" + bestMove);
+
+                        try {
+                            game.ntxuva = game.ntxuva.move(bestMove);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex);
+                        }
+
+                        System.out.println(game.ntxuva.toString());
+                        //myGui.btn.setBackground(Color.RED);
                     }
-                    
+
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.INFORM);
                     reply.setContent("TurnX");
-                     myAgent.send(reply);
+                    myAgent.send(reply);
                 }
 
             }
 
             @Override
             public boolean done() {
-                return false;
+                return game.ntxuva.gameEnd();
             }
         });
     }
@@ -66,6 +89,12 @@ public class AgentO extends Agent {
     protected void takeDown() {
 
 //        myGui.dispose();
+        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
+        if (u < 0) {
+            System.out.println("O ganhou");
+        } else {
+            System.out.println("X ganhou");
+        }
         System.out.println("" + getAID().getName() + " terminating.");
     }
 

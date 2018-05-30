@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.unilurio.teste;
+package com.unilurio.agents;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,17 +11,19 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import com.unilurio.ntxuva.Ntxuva;
 
 /**
  *
  * @author DNIC2012
  */
-public class SigletonTestGui {
+public class SigletonNtxuvaGui {
 
     JFrame frame;
-    private static SigletonTestGui uniqueInstance;
+    
+    private static SigletonNtxuvaGui uniqueInstance;
 
-    public SigletonTestGui() {
+    public SigletonNtxuvaGui() {
 
         frame = new JFrame("Ntxuva");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,9 +46,9 @@ public class SigletonTestGui {
         frame.setVisible(true);
     }
 
-    public static synchronized SigletonTestGui getInstance() {
+    public static synchronized SigletonNtxuvaGui getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new SigletonTestGui();
+            uniqueInstance = new SigletonNtxuvaGui();
         }
 
         return uniqueInstance;
