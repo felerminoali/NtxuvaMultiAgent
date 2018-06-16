@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class AlphaBetaPrunning extends SearchParent {
 
-    static ArrayList<Sucessor> sucessores = new ArrayList<>();
-    int maxProf = 5;
+    static ArrayList<Sucessor> sucessoresAlpha = new ArrayList<>();
+    int maxProf = 8;
     private char turn;
 
     @Override
@@ -25,7 +25,7 @@ public class AlphaBetaPrunning extends SearchParent {
         /*
      * Limpa os sucessores
          */
-        sucessores.clear();
+        sucessoresAlpha.clear();
 
         /*
      * Recebe a utilidade mÃ¡xima
@@ -35,7 +35,7 @@ public class AlphaBetaPrunning extends SearchParent {
         /*
      * Percorre a lista em busca do primeiro sucessor com utilidade maxima
          */
-        for (Sucessor s : sucessores) {
+        for (Sucessor s : sucessoresAlpha) {
             if (s.utilidade == v) {
                 return s.position;
             }
@@ -70,7 +70,7 @@ public class AlphaBetaPrunning extends SearchParent {
        * Se forem os primeiros sucessores, adiciona na lista de sucessores...
              */
             if (prim) {
-                sucessores.add(s);
+                sucessoresAlpha.add(s);
             }
 
             /*

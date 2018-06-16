@@ -26,15 +26,15 @@ public class AgentX extends Agent {
     protected void setup() {
 
 //        myGui.showGui();
-        System.out.println("Agent X - MiniMax");
-//         System.out.println("Agent X - AlphaBetaPruning");
+//        System.out.println("Agent X - MiniMax");
+         System.out.println("Agent X - AlphaBetaPruning");
         System.out.println(game.ntxuva.toString());
 
         addBehaviour(new OneShotBehaviour(this) {
             @Override
             public void action() {
                 System.out.println("entrou x one shot");
-                game.ntxuva.turn = 'x';
+                game.ntxuva.turn = 'o';
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
                 msg.addReceiver(new AID("agento", AID.ISLOCALNAME));
                 msg.setLanguage("English");
@@ -56,8 +56,8 @@ public class AgentX extends Agent {
 
                         System.out.println(game.ntxuva.turn);
 
-//                        Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
-                         Position bestMove = new GameTreeSearch(new MiniMax()).getBestMove(game.ntxuva);
+                        Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
+//                         Position bestMove = new GameTreeSearch(new MiniMax()).getBestMove(game.ntxuva);
                         System.out.println("x Move:" + bestMove);
 
                         try {
@@ -95,13 +95,13 @@ public class AgentX extends Agent {
     protected void takeDown() {
 //        myGui.dispose();
 
-//        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
-        int u = new GameTreeSearch(new MiniMax()).utilidade(game.ntxuva);
+        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
+//        int u = new GameTreeSearch(new MiniMax()).utilidade(game.ntxuva);
 
         if (u < 0) {
-            System.out.println("O ganhou");
-        } else {
             System.out.println("X ganhou");
+        } else {
+            System.out.println("O ganhou");
         }
         System.out.println("" + getAID().getName() + " terminating.");
     }
