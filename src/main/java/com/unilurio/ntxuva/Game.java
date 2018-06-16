@@ -112,7 +112,8 @@ public class Game {
 //                            System.out.println("entrei");
                             
                             
-                             Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
+                             //Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
+                             Position bestMove = new GameTreeSearch(new MiniMax()).getBestMove(game.ntxuva);
 //                            System.out.println("best: "+bestMove);
 //                            JOptionPane.showMessageDialog(null, bestMove.toString());
 
@@ -129,7 +130,8 @@ public class Game {
                         StringBuilder message = new StringBuilder();
                         if (game.ntxuva.gameEnd()) {
 
-                            int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
+//                            int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
+                             int u = new GameTreeSearch(new MiniMax()).utilidade(game.ntxuva);
 
                             if (u < 0) {
                                 message.append("You Win");

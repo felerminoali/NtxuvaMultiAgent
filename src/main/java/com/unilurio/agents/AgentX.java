@@ -26,6 +26,8 @@ public class AgentX extends Agent {
     protected void setup() {
 
 //        myGui.showGui();
+        System.out.println("Agent X - MiniMax");
+//         System.out.println("Agent X - AlphaBetaPruning");
         System.out.println(game.ntxuva.toString());
 
         addBehaviour(new OneShotBehaviour(this) {
@@ -51,11 +53,11 @@ public class AgentX extends Agent {
 
                     if (content.equalsIgnoreCase("TurnX")) {
                         System.out.println("X playing ...");
-                         
+
                         System.out.println(game.ntxuva.turn);
-                        
-                        
-                        Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
+
+//                        Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
+                         Position bestMove = new GameTreeSearch(new MiniMax()).getBestMove(game.ntxuva);
                         System.out.println("x Move:" + bestMove);
 
                         try {
@@ -79,16 +81,22 @@ public class AgentX extends Agent {
 
             @Override
             public boolean done() {
+                //System.out.println("entrou X done return ="+game.ntxuva.gameEnd());
+                if(game.ntxuva.gameEnd()){
+                    myAgent.doDelete();
+                }
                 return game.ntxuva.gameEnd();
             }
         });
 
     }
 
+    @Override
     protected void takeDown() {
 //        myGui.dispose();
 
-        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
+//        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
+        int u = new GameTreeSearch(new MiniMax()).utilidade(game.ntxuva);
 
         if (u < 0) {
             System.out.println("O ganhou");
@@ -97,7 +105,5 @@ public class AgentX extends Agent {
         }
         System.out.println("" + getAID().getName() + " terminating.");
     }
-
-    
 
 }

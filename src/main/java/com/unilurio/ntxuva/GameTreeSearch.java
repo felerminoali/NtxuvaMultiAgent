@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class GameTreeSearch {
 
-    static ArrayList<Sucessor> sucessores = new ArrayList<>();
-    Search search;
+    
+    SearchParent search;
 
-    public GameTreeSearch(Search search) {
+    public GameTreeSearch(SearchParent search) {
         this.search = search;
     }
     
