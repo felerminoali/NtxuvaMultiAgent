@@ -54,18 +54,21 @@ public class AgentX extends Agent {
                     if (content.equalsIgnoreCase("TurnX")) {
                         System.out.println("X playing ...");
 
-                        System.out.println(game.ntxuva.turn);
+                        System.out.println("antes ");
+                        System.out.println(game.ntxuva.toString());
+                        //System.out.println(game.ntxuva.turn);
 
                         Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
 //                         Position bestMove = new GameTreeSearch(new MiniMax()).getBestMove(game.ntxuva);
                         System.out.println("x Move:" + bestMove);
+                         System.out.println("N os seeds:"+game.ntxuva.board[bestMove.row][bestMove.column]);
 
                         try {
                             game.ntxuva = game.ntxuva.move(bestMove);
                         } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, ex);
+                           JOptionPane.showMessageDialog(null, "fail to move");
                         }
-
+                        System.out.println("depois");
                         System.out.println(game.ntxuva.toString());
                         //myGui.btn.setBackground(Color.CYAN);
                     }

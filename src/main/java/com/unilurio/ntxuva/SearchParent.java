@@ -36,15 +36,13 @@ abstract class SearchParent {
 
                         if (!ntxuva.isNeverEndingMove(new Position(i, j))) {
                             Position p = new Position(i, j);
-
                             Ntxuva move = ntxuva.move(p);
-
                             suc.add(new Sucessor(move, p));
                         } else {
-                            System.out.println("=========Cyclte ========");
-                            System.out.println(ntxuva);
-                            System.out.println("P: " + new Position(i, j));
-                            System.out.println("=================");
+//                            System.out.println("=========Cyclte ========");
+//                            System.out.println(ntxuva);
+//                            System.out.println("P: " + new Position(i, j));
+//                            System.out.println("=================");
 
                         }
 

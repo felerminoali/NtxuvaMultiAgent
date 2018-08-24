@@ -136,7 +136,8 @@ public class AlphaBetaPrunning extends SearchParent {
         pc = contaPecas(ntxuva, 'o');
         usr = contaPecas(ntxuva, 'x');
 
-        return (pc - usr);
+        //return (pc - usr);
+         return (usr - pc);
     }
 
 }
