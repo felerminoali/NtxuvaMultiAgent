@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author user
  */
-public class RandomPlayer extends SearchParent {
+public class RandomPlayer extends Player {
 
     static ArrayList<Sucessor> sucessoresRandom = new ArrayList<>();
     private char turn;

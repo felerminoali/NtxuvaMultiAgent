@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author DNIC2012
  */
-abstract class SearchParent {
+public abstract class Player {
     
     public boolean teste_terminal(Ntxuva ntxuva) {
         return false;

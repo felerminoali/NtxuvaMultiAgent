@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class GameTreeSearch {
 
     
-    SearchParent search;
+    Player search;
 
-    public GameTreeSearch(SearchParent search) {
+    public GameTreeSearch(Player search) {
         this.search = search;
     }
     
