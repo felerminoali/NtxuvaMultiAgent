@@ -73,7 +73,7 @@ abstract class SearchParent {
         return ntxuva.sumPieces(turn);
     }
      
-    abstract Position decisao_minimax(Ntxuva ntuxa);
-    abstract public int utilidade(Ntxuva ntxuva);
+    public abstract Position decisao_minimax(Ntxuva ntuxa);
+     public abstract  int utilidade(Ntxuva ntxuva);
     
 }

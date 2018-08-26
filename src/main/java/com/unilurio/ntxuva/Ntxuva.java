@@ -58,7 +58,7 @@ public class Ntxuva {
             this.board = new int[ROWS][COLUMNS];
             for (int i = 0; i < ROWS; i++) {
                 for (int j = 0; j < COLUMNS; j++) {
-                    this.board[i][j] = Integer.parseInt(characters[i][j] + "");
+                     this.board[i][j] = Integer.parseInt(characters[i][j] + "");
                 }
             }
 

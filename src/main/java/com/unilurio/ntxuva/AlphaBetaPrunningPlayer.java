@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author DNIC2012
  */
-public class AlphaBetaPrunning extends SearchParent {
+public class AlphaBetaPrunningPlayer extends SearchParent {
 
     static ArrayList<Sucessor> sucessoresAlpha = new ArrayList<>();
     int maxProf = 8;

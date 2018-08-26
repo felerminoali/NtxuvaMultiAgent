@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author DNIC2012
  */
-public class MiniMax extends SearchParent{
+public class MiniMaxPlayer extends SearchParent{
 
     static ArrayList<Sucessor> sucessores = new ArrayList<>();
     char turn;

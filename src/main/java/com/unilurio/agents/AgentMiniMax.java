@@ -5,7 +5,7 @@
  */
 package com.unilurio.agents;
 
-import com.unilurio.ntxuva.AlphaBetaPrunning;
+import com.unilurio.ntxuva.AlphaBetaPrunningPlayer;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -14,36 +14,52 @@ import jade.lang.acl.ACLMessage;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import com.unilurio.ntxuva.GameTreeSearch;
-import com.unilurio.ntxuva.MiniMax;
+import com.unilurio.ntxuva.MiniMaxPlayer;
 import com.unilurio.ntxuva.Position;
 
 /**
  *
  * @author DNIC2012
  */
-public class AgentO extends Agent {
+public class AgentMiniMax extends Agent {
 
 //    private SigletonNtxuvaGui myGui = SigletonNtxuvaGui.getInstance();
     private SigletonNtxuvaBoard game = SigletonNtxuvaBoard.getInstance();
 
+    @Override
     protected void setup() {
         //myGui.showGui();
-        System.out.println("Agent O - MiniMax");
-//         System.out.println("Agent O - AlphaBetaPruning");
+        Object[] args = getArguments();
+
+        if ((args.length > 1) && (!args[0].toString().equals("x") || !args[0].toString().equals("o"))) {
+            System.out.println("Error:  Invalid arguments! ");
+            return;
+        }
+
+        System.out.println(args.length > 0 ? args[0].toString() : "");
+
+        System.out.println("Agent " + (args.length > 0 ? args[0].toString() : "o") + "- MiniMax");
         System.out.println(game.ntxuva.toString());
 
         addBehaviour(new OneShotBehaviour(this) {
             @Override
             public void action() {
 
-               
-                System.out.println("entrou one shot O");
-                 game.ntxuva.turn = 'x';
+//                System.out.println("entrou one shot O");
+                System.out.println("entrou " + (args.length > 0 ? args[0].toString() : "o") + " one shot");
+//                game.ntxuva.turn = 'x';
+                if (args.length > 0) {
+                    game.ntxuva.turn = args[0].toString().charAt(0) == 'o' ? 'x' : 'o';
+                } else {
+                    game.ntxuva.turn = 'x';
+                }
+
                 System.out.println(game.ntxuva.toString());
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-                msg.addReceiver(new AID("agentx", AID.ISLOCALNAME));
+                msg.addReceiver(new AID("agent" + (args.length > 0 ? (args[0].toString().charAt(0) == 'o' ? 'x' : 'o') : 'x'), AID.ISLOCALNAME));
                 msg.setLanguage("English");
-                msg.setContent("TurnX");
+//                msg.setContent("TurnX");
+                msg.setContent(args.length > 0 ? (args[0].toString().equals("x") ? "TurnO" : "TurnX") : "TurnO");
                 myAgent.send(msg);
             }
 
@@ -55,17 +71,19 @@ public class AgentO extends Agent {
                 ACLMessage msg = myAgent.receive();
                 if (msg != null) {
                     String content = msg.getContent();
-
-                    if (content.equalsIgnoreCase("TurnO")) {
-                        System.out.println("O playing ...");
-                       System.out.println("antes ");
+                    String labelTurn = args[0].toString().equals("x") ? "TurnX" : "TurnO";
+//                    if (content.equalsIgnoreCase("TurnO")) {
+//                        System.out.println("O playing ...");
+                    if (content.equalsIgnoreCase(args.length > 0 ? labelTurn : "TurnX")) {
+                        System.out.println((args.length > 0 ? args[0].toString() : "x") + " playing ...");
+                        System.out.println("antes ");
                         System.out.println(game.ntxuva.toString());
                         //System.out.println(game.ntxuva.turn);
 //                         Position bestMove = new GameTreeSearch(new AlphaBetaPrunning()).getBestMove(game.ntxuva);
-                         Position bestMove = new GameTreeSearch(new MiniMax()).getBestMove(game.ntxuva);
-                        System.out.println("o Move:" + bestMove);
-                        System.out.println("N os seeds:"+game.ntxuva.board[bestMove.row][bestMove.column]);
-                        
+                        Position bestMove = new GameTreeSearch(new MiniMaxPlayer()).getBestMove(game.ntxuva);
+//                        System.out.println("o Move:" + bestMove);
+                        System.out.println((args.length > 0 ? args[0].toString() : "x") + " Move:" + bestMove);
+                        System.out.println("N os seeds:" + game.ntxuva.board[bestMove.row][bestMove.column]);
 
                         try {
                             game.ntxuva = game.ntxuva.move(bestMove);
@@ -79,7 +97,8 @@ public class AgentO extends Agent {
 
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.INFORM);
-                    reply.setContent("TurnX");
+//                    reply.setContent("TurnX");
+                    reply.setContent(args[0].toString().equals("x") ? "TurnO" : "TurnX");
                     myAgent.send(reply);
                 }
 
@@ -88,7 +107,7 @@ public class AgentO extends Agent {
             @Override
             public boolean done() {
                 //System.out.println("entrou O done return ="+game.ntxuva.gameEnd());
-                if(game.ntxuva.gameEnd()){
+                if (game.ntxuva.gameEnd()) {
                     myAgent.doDelete();
                 }
                 return game.ntxuva.gameEnd();
@@ -101,7 +120,8 @@ public class AgentO extends Agent {
 
 //        myGui.dispose();
 //        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
-        int u = new GameTreeSearch(new MiniMax()).utilidade(game.ntxuva);
+        int u = new GameTreeSearch(new MiniMaxPlayer()).utilidade(game.ntxuva);
+        System.out.println("o utility:" + u);
         if (u < 0) {
             System.out.println("X ganhou");
         } else {
