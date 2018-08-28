@@ -10,6 +10,11 @@ import com.unilurio.behaviours.MyTwoStepBehaviours;
 import jade.core.Agent;
 import com.unilurio.ntxuva.*;
 
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+
 /**
  *
  * @author DNIC2012
@@ -17,7 +22,8 @@ import com.unilurio.ntxuva.*;
 public class AgentAlphaBetaPruning extends Agent {
 
 //    private SigletonNtxuvaGui myGui = SigletonNtxuvaGui.getInstance();
-    private SigletonNtxuvaBoard game = SigletonNtxuvaBoard.getInstance();
+    public SigletonNtxuvaBoard game = SigletonNtxuvaBoard.getInstance();
+    private String p;
 
     protected void setup() {
 
@@ -29,6 +35,8 @@ public class AgentAlphaBetaPruning extends Agent {
             System.out.println("Error:  Invalid arguments! ");
             return;
         }
+
+        p = args[0].toString();
 
         System.out.println(args.length > 0 ? args[0].toString() : "");
         System.out.println("Agent " + (args.length > 0 ? args[0].toString() : "x") + " - AlphaBetaPruning");
@@ -43,13 +51,36 @@ public class AgentAlphaBetaPruning extends Agent {
 
         int u = new GameTreeSearch(new AlphaBetaPrunningPlayer()).utilidade(game.ntxuva);
 
-        System.out.println("x utility:" + u);
+        System.out.println(AgentAlphaBetaPruning.class.getSimpleName() + "utility:" + u);
+
+        BufferedWriter bw = null;
+        FileWriter fw = null;
         if (u > 0) {
-            System.out.println("X ganhou");
+            if (p.equals("x")) {
+                String content = AgentAlphaBetaPruning.class.getSimpleName() + " X ganhou";
+                System.out.println(content);
+                writeResult(AgentAlphaBetaPruning.class.getSimpleName()+"\n");
+            }
         } else {
-            System.out.println("O ganhou");
+            if (p.equals("o")) {
+                String content = AgentAlphaBetaPruning.class.getSimpleName() + " O ganhou";
+                System.out.println(content);
+               writeResult(AgentAlphaBetaPruning.class.getSimpleName()+"\n");
+            }
         }
         System.out.println("" + getAID().getName() + " terminating.");
+    }
+
+    private void writeResult(String content) {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter("results.txt", true);
+            fw.write(content);
+            fw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

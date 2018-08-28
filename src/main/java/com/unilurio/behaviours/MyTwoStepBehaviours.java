@@ -46,6 +46,8 @@ public class MyTwoStepBehaviours extends Behaviour {
                 System.out.println(game.ntxuva.toString());
 
                 // check if it is a win situation or not
+                if(game.ntxuva.gameEnd()) myAgent.doDelete();
+                
                 
                 Position bestMove;
                 if (step == 0) {

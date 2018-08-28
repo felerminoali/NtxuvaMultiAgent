@@ -15,7 +15,7 @@ public class SigletonNtxuvaBoard {
 
     public Ntxuva ntxuva;
 
-    private static SigletonNtxuvaBoard uniqueInstance;
+    public static SigletonNtxuvaBoard uniqueInstance;
 
     public SigletonNtxuvaBoard() {
         ntxuva = new Ntxuva();
@@ -27,6 +27,10 @@ public class SigletonNtxuvaBoard {
         }
 
         return uniqueInstance;
+    }
+
+    public static synchronized SigletonNtxuvaBoard reset() {
+        return new SigletonNtxuvaBoard();
     }
 
 }

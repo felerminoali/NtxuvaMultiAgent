@@ -8,15 +8,13 @@ package com.unilurio.agents;
 import com.unilurio.behaviours.MyOneShotBehaviour;
 import com.unilurio.behaviours.MyTwoStepBehaviours;
 import com.unilurio.ntxuva.GameTreeSearch;
-import com.unilurio.ntxuva.MiniMaxPlayer;
-import com.unilurio.ntxuva.Position;
+
 import com.unilurio.ntxuva.RandomPlayer;
-import jade.core.AID;
+
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.OneShotBehaviour;
-import jade.lang.acl.ACLMessage;
-import javax.swing.JOptionPane;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -25,6 +23,7 @@ import javax.swing.JOptionPane;
 public class AgentRadom extends Agent {
 
     private SigletonNtxuvaBoard game = SigletonNtxuvaBoard.getInstance();
+    private String p;
 
     @Override
     protected void setup() {
@@ -36,13 +35,12 @@ public class AgentRadom extends Agent {
             return;
         }
 
+        p = args[0].toString();
         System.out.println(args.length > 0 ? args[0].toString() : "");
 
         System.out.println("Agent " + (args.length > 0 ? args[0].toString() : "o") + "- Random");
         System.out.println(game.ntxuva.toString());
-        
-        
-        
+
         addBehaviour(new MyOneShotBehaviour(this, game));
         addBehaviour(new MyTwoStepBehaviours(this, game, new RandomPlayer()));
     }
@@ -53,13 +51,33 @@ public class AgentRadom extends Agent {
 //        myGui.dispose();
 //        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
         int u = new GameTreeSearch(new RandomPlayer()).utilidade(game.ntxuva);
-        System.out.println("o utility:" + u);
+        System.out.println(RandomPlayer.class.getSimpleName() + " utility:" + u);
+
+        BufferedWriter bw = null;
+        FileWriter fw = null;
         if (u > 0) {
-            System.out.println("X ganhou");
+            if (p.equals("x")) {
+                System.out.println(RandomPlayer.class.getSimpleName() + "X ganhou");
+                writeResult(RandomPlayer.class.getSimpleName()+"\n");
+            }
         } else {
-            System.out.println("O ganhou");
+            if (p.equals("o")) {
+                System.out.println(RandomPlayer.class.getSimpleName() + "O ganhou");
+                writeResult(RandomPlayer.class.getSimpleName()+"\n");
+            }
         }
         System.out.println("" + getAID().getName() + " terminating.");
     }
 
+    private void writeResult(String content) {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter("results.txt", true);
+            fw.write(content);
+            fw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
