@@ -23,12 +23,11 @@ public class RandomPlayer extends Player {
         turn = ntuxa.turn;
         sucessoresAlpha.clear();
         sucessoresRandom = possibleMoves(ntuxa, (turn == 'o') ? 'o' : 'x');
-        
-        sucessoresRandom.forEach((sucessor) -> {
-            System.out.println(sucessor.position);
-        });
-        int index = getRandomIndex(0, sucessoresRandom.size() - 1);
-        return sucessoresRandom.get(index).position;
+
+//        sucessoresRandom.forEach((sucessor) -> {
+//            System.out.println(sucessor.position);
+//        });
+        return !sucessoresRandom.isEmpty() ? sucessoresRandom.get(getRandomIndex(0, sucessoresRandom.size() - 1)).position : null;
     }
 
     @Override

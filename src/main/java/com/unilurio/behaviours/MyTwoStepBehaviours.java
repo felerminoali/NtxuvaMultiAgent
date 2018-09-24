@@ -46,9 +46,10 @@ public class MyTwoStepBehaviours extends Behaviour {
                 System.out.println(game.ntxuva.toString());
 
                 // check if it is a win situation or not
-                if(game.ntxuva.gameEnd()) myAgent.doDelete();
-                
-                
+                if (game.ntxuva.gameEnd()) {
+                    myAgent.doDelete();
+                }
+
                 Position bestMove;
                 if (step == 0) {
                     bestMove = new GameTreeSearch(new RandomPlayer()).getBestMove(game.ntxuva);
@@ -57,13 +58,16 @@ public class MyTwoStepBehaviours extends Behaviour {
                     bestMove = new GameTreeSearch(player).getBestMove(game.ntxuva);
                 }
 
-                System.out.println((args.length > 0 ? args[0].toString() : "x") + " Move:" + bestMove);
-                System.out.println("N os seeds:" + game.ntxuva.board[bestMove.row][bestMove.column]);
-
-                try {
-                    game.ntxuva = game.ntxuva.move(bestMove);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "fail to move");
+                if (bestMove == null) {
+                    myAgent.doDelete();
+                } else {
+                    System.out.println((args.length > 0 ? args[0].toString() : "x") + " Move:" + bestMove);
+                    System.out.println("N os seeds:" + game.ntxuva.board[bestMove.row][bestMove.column]);
+                    try {
+                        game.ntxuva = game.ntxuva.move(bestMove);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "fail to move");
+                    }
                 }
                 System.out.println("depois");
                 System.out.println(game.ntxuva.toString());

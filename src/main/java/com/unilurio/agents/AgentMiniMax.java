@@ -22,13 +22,11 @@ import java.io.IOException;
  */
 public class AgentMiniMax extends Agent {
 
-//    private SigletonNtxuvaGui myGui = SigletonNtxuvaGui.getInstance();
     private SigletonNtxuvaBoard game = SigletonNtxuvaBoard.getInstance();
     private String p;
 
     @Override
     protected void setup() {
-        //myGui.showGui();
         Object[] args = getArguments();
 
         if ((args.length > 1) && (!args[0].toString().equals("x") || !args[0].toString().equals("o"))) {
@@ -50,8 +48,6 @@ public class AgentMiniMax extends Agent {
     @Override
     protected void takeDown() {
 
-//        myGui.dispose();
-//        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
         int u = new GameTreeSearch(new MiniMaxPlayer()).utilidade(game.ntxuva);
         System.out.println(MiniMaxPlayer.class.getSimpleName() + " utility:" + u);
 

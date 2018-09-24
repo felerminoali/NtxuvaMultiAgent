@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 500; i++) {
 
             // This is the important method. This launches the jade platform.
             jade.core.Runtime rt = jade.core.Runtime.instance();
@@ -38,8 +38,8 @@ public class Main {
 
                 // Here I create an agent in the main container and start it.
                 Object[] argsx = {"x"};
-                AgentController agentx = mainContainer.createNewAgent("agentx", com.unilurio.agents.AgentAlphaBetaPruning.class.getName(), argsx);
-//                AgentController agentx = mainContainer.createNewAgent("agentx", com.unilurio.agents.AgentMiniMax.class.getName(), argsx);
+//                AgentController agentx = mainContainer.createNewAgent("agentx", com.unilurio.agents.AgentAlphaBetaPruning.class.getName(), argsx);
+                AgentController agentx = mainContainer.createNewAgent("agentx", com.unilurio.agents.AgentMiniMax.class.getName(), argsx);
                 agentx.start();
                 Object[] argso = {"o"};
 

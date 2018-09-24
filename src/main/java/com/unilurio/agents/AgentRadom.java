@@ -48,8 +48,6 @@ public class AgentRadom extends Agent {
     @Override
     protected void takeDown() {
 
-//        myGui.dispose();
-//        int u = new GameTreeSearch(new AlphaBetaPrunning()).utilidade(game.ntxuva);
         int u = new GameTreeSearch(new RandomPlayer()).utilidade(game.ntxuva);
         System.out.println(RandomPlayer.class.getSimpleName() + " utility:" + u);
 
